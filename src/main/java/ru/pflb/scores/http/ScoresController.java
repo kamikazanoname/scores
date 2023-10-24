@@ -1,12 +1,7 @@
 package ru.pflb.scores.http;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ru.pflb.scores.service.ScoreService;
 
 @RestController
@@ -19,13 +14,13 @@ public class ScoresController {
         this.scoreService = scoreService;
     }
 
-    @GetMapping(path = "/hiscores/{levelId}")
+    @GetMapping(path = "/highscores/{levelId}")
     public String getHighScores(@PathVariable int levelId) {
         return scoreService.highScores(levelId);
     }
 
     @PostMapping(path = "/score/{levelId}/{userId}")
-    public void recordScore(@PathVariable int levelId, @PathVariable int userId, @RequestParam(name = "sessionKey") String sessionKey, @RequestBody String score) {
+    public void recordScore(@PathVariable int levelId, @PathVariable int userId, @RequestBody String score, @CookieValue("SessionKey") String sessionKey) {
         int parsedScore = Integer.parseInt(score);
         scoreService.record(sessionKey, parsedScore, levelId);
     }

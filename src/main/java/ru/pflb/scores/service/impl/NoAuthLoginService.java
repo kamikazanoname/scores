@@ -20,7 +20,7 @@ public class NoAuthLoginService implements LoginService {
     }
 
     @Override
-    public String login(int userId) {
+    public String login(int userId, String password) {
         return sessionHolder.createSession(userId);
     }
 }

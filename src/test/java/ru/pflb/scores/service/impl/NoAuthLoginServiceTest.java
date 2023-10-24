@@ -25,12 +25,13 @@ class NoAuthLoginServiceTest {
     @Test
     void loginReturnsSessionKey() {
         var userId = 1;
+        var password = "psswrd";
         var sessionKey = "valid_session";
 
         Mockito.when(sessionEvictingHolder.createSession(userId))
                 .thenReturn(sessionKey);
 
-        var actualSessionKey = loginService.login(userId);
+        var actualSessionKey = loginService.login(userId, password);
 
         Assertions.assertEquals(sessionKey, actualSessionKey);
     }
